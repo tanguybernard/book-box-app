@@ -31,15 +31,47 @@ export default async function CityDetailsPage({ params }: DetailsPageProps) {
         notFound()
     }
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+
+
+    const res = await fetch(`${baseUrl}/api/address/${resolvedParams.slug}/books`, {
+        cache: "no-store",
+    });
+
+    if (!res.ok) {
+        throw new Error('Failed to fetch books');
+    }
+
+
+    const books = await res.json();
+
     return (
         <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-8">
             <div className="max-w-lg bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
                 <h1 className="text-3xl font-semibold mb-4 text-center">{city.name}</h1>
                 <p className="text-gray-700 text-center mb-6">{city.description}</p>
 
-                <div className="flex justify-center">
+                <h2 className="text-xl font-semibold mb-2">Livres scannés</h2>
+                <ul>
+                    {books.map((b: any) => (
+                        <li key={b.id}>
+                            <img src={b.thumbnail ?? ""} alt="" width={40} className="inline mr-2" />
+                            {b.title} — {b.author}
+                        </li>
+                    ))}
+                </ul>
+
+                <div className="flex justify-center mt-6">
+
                     <a
-                        href="/map"
+                        href={`/address/${resolvedParams.slug}/add-book`}
+                        className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+                    >
+                        + Scanner un livre
+                    </a>
+
+                    <a
+                        href="/"
                         className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
                     >
                         ← Retour à la carte
@@ -47,5 +79,5 @@ export default async function CityDetailsPage({ params }: DetailsPageProps) {
                 </div>
             </div>
         </main>
-    )
+    );
 }

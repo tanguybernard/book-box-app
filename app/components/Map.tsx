@@ -58,7 +58,7 @@ export default function Map() {
             marker.on("popupopen", () => {
                 const btn = document.getElementById(`btn-${city.slug}`)
                 if (btn) {
-                    btn.addEventListener("click", () => router.push(`/details/${city.slug}`))
+                    btn.addEventListener("click", () => router.push(`/address/${city.slug}`))
                 }
             })
         })
