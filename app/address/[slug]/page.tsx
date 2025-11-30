@@ -55,7 +55,7 @@ export default async function CityDetailsPage({ params }: DetailsPageProps) {
                 <ul>
                     {books.map((b: any) => (
                         <li key={b.id}>
-                            <img src={b.thumbnail ?? ""} alt="" width={40} className="inline mr-2" />
+                            <img src={b?.thumbnail ?? ""} alt="" width={40} className="inline mr-2" />
                             {b.title} — {b.author}
                         </li>
                     ))}

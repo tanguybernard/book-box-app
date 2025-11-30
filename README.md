@@ -1,5 +1,9 @@
 # Ma Boite A Livre
 
+## Prisma :
+
+    npx prisma migrate dev
+
 ## TODO LIST
 
 Prio
