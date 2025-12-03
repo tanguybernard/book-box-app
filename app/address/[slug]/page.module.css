@@ -69,6 +69,22 @@
     background-color: transparent;
     border: none;
     padding: 0;
+    position: relative;
+}
+
+.sponsoredBadge {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: var(--color-amber-500, #f59e0b);
+    color: white;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    z-index: 10;
+    box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.1);
 }
 
 .bookThumbnailContainer {
@@ -80,6 +96,10 @@
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.06);
     transition: transform 0.2s, box-shadow 0.2s;
     background-color: var(--color-stone-200, #e7e5e4);
+}
+
+.bookItem.sponsored .bookThumbnailContainer {
+    border: 2px solid var(--color-amber-500, #f59e0b);
 }
 
 .bookItem:hover .bookThumbnailContainer {

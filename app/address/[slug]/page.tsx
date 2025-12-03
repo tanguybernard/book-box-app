@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import { mockBookBoxes } from "../../data/mockBookBoxes"
+import { sponsoredBooks } from "../../data/sponsoredBooks"
 import { MapContainer } from "../../containers/MapContainer"
 import styles from "./page.module.css"
 
@@ -27,7 +28,8 @@ export default async function CityDetailsPage({ params }: DetailsPageProps) {
     }
 
 
-    const books = await res.json();
+    const fetchedBooks = await res.json();
+    const books = [...sponsoredBooks, ...fetchedBooks];
 
     return (
         <main className={styles.main}>
@@ -59,8 +61,9 @@ export default async function CityDetailsPage({ params }: DetailsPageProps) {
                 {books.length > 0 ? (
                     <div className={styles.bookGrid}>
                         {books.map((b: any) => (
-                            <div key={b.id} className={styles.bookItem}>
+                            <div key={b.id} className={`${styles.bookItem} ${b.isSponsored ? styles.sponsored : ''}`}>
                                 <div className={styles.bookThumbnailContainer}>
+                                    {b.isSponsored && <span className={styles.sponsoredBadge}>Sponsorisé</span>}
                                     {b.thumbnail ? (
                                         <img src={b.thumbnail} alt={b.title} className={styles.bookThumbnail} />
                                     ) : (
