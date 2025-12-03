@@ -2,6 +2,7 @@
 import { useState, use } from "react";
 import BarcodeScanner from "../../../components/BarcodeScanner";
 import { mockBookBoxes } from "../../../data/mockBookBoxes";
+import styles from "./page.module.css";
 
 export default function AddBookPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = use(params);
@@ -45,24 +46,24 @@ export default function AddBookPage({ params }: { params: Promise<{ slug: string
     }
 
     return (
-        <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-8">
-            <div className="max-w-lg bg-white p-6 rounded-2xl shadow-lg border border-gray-200 text-center">
-                <h1 className="text-2xl font-semibold mb-4">Ajouter un livre à {bookBoxName}</h1>
+        <main className={styles.main}>
+            <div className={styles.card}>
+                <h1 className={styles.title}>Ajouter un livre à {bookBoxName}</h1>
 
                 <BarcodeScanner onDetected={handleDetected} />
 
-                {loading && <p className="mt-4 text-blue-600">Chargement...</p>}
-                {message && <p className="mt-4">{message}</p>}
+                {loading && <p className={styles.loading}>Chargement...</p>}
+                {message && <p className={styles.message}>{message}</p>}
 
                 {book && (
-                    <div className="mt-6 border-t pt-4">
-                        <h2 className="text-lg font-semibold">{book.title}</h2>
-                        <p className="text-gray-600">{book.author}</p>
+                    <div className={styles.bookDetails}>
+                        <h2 className={styles.bookTitle}>{book.title}</h2>
+                        <p className={styles.bookAuthor}>{book.author}</p>
                         {book.thumbnail && (
                             <img
                                 src={book.thumbnail}
                                 alt={book.title}
-                                className="mx-auto mt-2 rounded-lg shadow w-32"
+                                className={styles.bookThumbnail}
                             />
                         )}
                     </div>
@@ -70,7 +71,7 @@ export default function AddBookPage({ params }: { params: Promise<{ slug: string
 
                 <a
                     href={`/address/${slug}`}
-                    className="mt-6 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                    className={styles.buttonBack}
                 >
                     ← Retour à {bookBoxName}
                 </a>

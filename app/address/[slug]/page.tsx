@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import { mockBookBoxes } from "../../data/mockBookBoxes"
+import styles from "./page.module.css"
 
 interface DetailsPageProps {
     params: { slug: string }
@@ -28,40 +29,40 @@ export default async function CityDetailsPage({ params }: DetailsPageProps) {
     const books = await res.json();
 
     return (
-        <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-8">
-            <div className="max-w-lg bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
-                <h1 className="text-3xl font-semibold mb-4 text-center">{bookBox.name}</h1>
-                <p className="text-gray-700 text-center mb-6">{bookBox.description || `Book box located at ${bookBox.address}`}</p>
+        <main className={styles.main}>
+            <div className={styles.card}>
+                <h1 className={styles.title}>{bookBox.name}</h1>
+                <p className={styles.description}>{bookBox.description || `Book box located at ${bookBox.address}`}</p>
 
-                <h2 className="text-xl font-semibold mb-2">Livres scannés</h2>
-                <ul>
+                <h2 className={styles.subtitle}>Livres scannés</h2>
+                <ul className={styles.bookList}>
                     {books.map((b: any) => (
-                        <li key={b.id}>
+                        <li key={b.id} className={styles.bookItem}>
                             {
                                 b.thumbnail ? (
-                                    <img src={b.thumbnail} alt="" width={40} className="inline mr-2" />
+                                    <img src={b.thumbnail} alt="" className={styles.bookThumbnail} />
 
                                 ) : (
-                                    <img src="http://localhost:3000/image-not-found.png" alt="" width={40} className="inline mr-2" />
+                                    <img src="http://localhost:3000/image-not-found.png" alt="" className={styles.bookThumbnail} />
                                 )
                             }
-                            {b.title} — {b.author}
+                            <span>{b.title} — <span className="text-stone-500 italic">{b.author}</span></span>
                         </li>
                     ))}
                 </ul>
 
-                <div className="flex justify-center mt-6">
+                <div className={styles.actions}>
 
                     <a
                         href={`/address/${resolvedParams.slug}/add-book`}
-                        className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+                        className={styles.buttonPrimary}
                     >
                         + Scanner un livre
                     </a>
 
                     <a
                         href="/"
-                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                        className={styles.buttonSecondary}
                     >
                         ← Retour à la carte
                     </a>
