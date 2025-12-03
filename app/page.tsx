@@ -1,31 +1,10 @@
-
-'use client';
-import Link from "next/link";
+import { MapContainer } from "./containers/MapContainer";
 
 export default function HomePage() {
     return (
-        <main className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-6">
-            <div className="bg-white shadow-lg rounded-xl p-8 max-w-md text-center">
-                <h1 className="text-3xl font-bold text-emerald-600 mb-4">
-                    📚 Bibliothèque Locale
-                </h1>
-
-                <p className="text-gray-600 mb-6">
-                    Gérez facilement les livres présents dans votre espace.
-                    Disponible même hors connexion !
-                </p>
-
-                <Link
-                    href="/map"
-                    className="px-6 py-3 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition"
-                >
-                    Voir la carte
-                </Link>
-            </div>
-
-            <footer className="mt-6 text-xs text-gray-500">
-                Progressive Web App — Offline ready ✅
-            </footer>
+        <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+            <h1 className="text-2xl font-semibold mb-6">Carte de Paris</h1>
+            <MapContainer />
         </main>
     );
 }
