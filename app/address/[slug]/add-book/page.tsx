@@ -1,10 +1,12 @@
 "use client";
 import { useState, use } from "react";
 import BarcodeScanner from "../../../components/BarcodeScanner";
+import { mockBookBoxes } from "../../../data/mockBookBoxes";
 
 export default function AddBookPage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = use(params); // Utilise le hook use() pour résoudre la Promise
-
+    const { slug } = use(params);
+    const bookBox = mockBookBoxes.find(b => b.id === slug);
+    const bookBoxName = bookBox ? bookBox.name : slug;
 
     const [isbn, setIsbn] = useState("");
     const [book, setBook] = useState<any>(null);
@@ -45,7 +47,7 @@ export default function AddBookPage({ params }: { params: Promise<{ slug: string
     return (
         <main className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-8">
             <div className="max-w-lg bg-white p-6 rounded-2xl shadow-lg border border-gray-200 text-center">
-                <h1 className="text-2xl font-semibold mb-4">Ajouter un livre à {slug}</h1>
+                <h1 className="text-2xl font-semibold mb-4">Ajouter un livre à {bookBoxName}</h1>
 
                 <BarcodeScanner onDetected={handleDetected} />
 
@@ -70,7 +72,7 @@ export default function AddBookPage({ params }: { params: Promise<{ slug: string
                     href={`/address/${slug}`}
                     className="mt-6 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
                 >
-                    ← Retour à {slug}
+                    ← Retour à {bookBoxName}
                 </a>
             </div>
         </main>
