@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import { mockBookBoxes } from "../../data/mockBookBoxes"
+import { MapContainer } from "../../containers/MapContainer"
 import styles from "./page.module.css"
 
 interface DetailsPageProps {
@@ -30,29 +31,14 @@ export default async function CityDetailsPage({ params }: DetailsPageProps) {
 
     return (
         <main className={styles.main}>
-            <div className={styles.card}>
-                <h1 className={styles.title}>{bookBox.name}</h1>
-                <p className={styles.description}>{bookBox.description || `Book box located at ${bookBox.address}`}</p>
-
-                <h2 className={styles.subtitle}>Livres scannés</h2>
-                <ul className={styles.bookList}>
-                    {books.map((b: any) => (
-                        <li key={b.id} className={styles.bookItem}>
-                            {
-                                b.thumbnail ? (
-                                    <img src={b.thumbnail} alt="" className={styles.bookThumbnail} />
-
-                                ) : (
-                                    <img src="http://localhost:3000/image-not-found.png" alt="" className={styles.bookThumbnail} />
-                                )
-                            }
-                            <span>{b.title} — <span className="text-stone-500 italic">{b.author}</span></span>
-                        </li>
-                    ))}
-                </ul>
+            {/* Sidebar (Details + Books) */}
+            <div className={styles.sidebar}>
+                <div className={styles.header}>
+                    <h1 className={styles.title}>{bookBox.name}</h1>
+                    <p className={styles.description}>{bookBox.description || `Book box located at ${bookBox.address}`}</p>
+                </div>
 
                 <div className={styles.actions}>
-
                     <a
                         href={`/address/${resolvedParams.slug}/add-book`}
                         className={styles.buttonPrimary}
@@ -64,9 +50,44 @@ export default async function CityDetailsPage({ params }: DetailsPageProps) {
                         href="/"
                         className={styles.buttonSecondary}
                     >
-                        ← Retour à la carte
+                        ← Retour
                     </a>
                 </div>
+
+                <h2 className={styles.subtitle}>Livres disponibles ({books.length})</h2>
+
+                {books.length > 0 ? (
+                    <div className={styles.bookGrid}>
+                        {books.map((b: any) => (
+                            <div key={b.id} className={styles.bookItem}>
+                                <div className={styles.bookThumbnailContainer}>
+                                    {b.thumbnail ? (
+                                        <img src={b.thumbnail} alt={b.title} className={styles.bookThumbnail} />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center bg-stone-100 text-stone-400">
+                                            <span className="text-xs">No Cover</span>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className={styles.bookInfo}>
+                                    <h3 className={styles.bookTitle}>{b.title}</h3>
+                                    <p className={styles.bookAuthor}>{b.author}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-stone-500 italic text-center py-10">Aucun livre pour le moment. Soyez le premier à en déposer un !</p>
+                )}
+            </div>
+
+            {/* Map */}
+            <div className={styles.mapContainer}>
+                <MapContainer
+                    bookBoxes={[bookBox]}
+                    center={[bookBox.lat, bookBox.lng]}
+                    zoom={16}
+                />
             </div>
         </main>
     );

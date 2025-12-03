@@ -1,37 +1,47 @@
 .main {
-    min-height: 100vh;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: var(--color-stone-50, #fafaf9);
+}
+
+.sidebar {
+    width: 40%;
+    min-width: 450px;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-stone-50, #fafaf9);
+    border-right: 1px solid var(--color-stone-200, #e7e5e4);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    z-index: 20;
+    background-color: white;
+    overflow-y: auto;
     padding: 2rem;
 }
 
-.card {
-    max-width: 32rem;
-    width: 100%;
-    background-color: white;
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    border: 1px solid var(--color-stone-200, #e7e5e4);
+.mapContainer {
+    flex: 1;
+    position: relative;
+    z-index: 0;
+}
+
+.header {
+    margin-bottom: 2rem;
+    text-align: center;
 }
 
 .title {
-    font-size: 1.875rem;
-    line-height: 2.25rem;
+    font-size: 2rem;
+    line-height: 2.5rem;
     font-weight: 700;
-    margin-bottom: 1rem;
-    text-align: center;
+    margin-bottom: 0.5rem;
     font-family: serif;
     color: var(--color-amber-800, #92400e);
 }
 
 .description {
     color: var(--color-stone-600, #57534e);
-    text-align: center;
-    margin-bottom: 2rem;
     font-size: 1rem;
     line-height: 1.5;
 }
@@ -39,70 +49,111 @@
 .subtitle {
     font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     color: var(--color-stone-700, #44403c);
     border-bottom: 2px solid var(--color-stone-100, #f5f5f4);
     padding-bottom: 0.5rem;
+    margin-top: 1rem;
 }
 
-.bookList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+.bookGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1.5rem;
+    padding-bottom: 2rem;
 }
 
 .bookItem {
     display: flex;
-    align-items: center;
-    padding: 0.75rem;
-    background-color: var(--color-stone-50, #fafaf9);
+    flex-direction: column;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.bookThumbnailContainer {
+    position: relative;
+    aspect-ratio: 2 / 3;
+    width: 100%;
     border-radius: 0.5rem;
-    border: 1px solid var(--color-stone-100, #f5f5f4);
-    color: var(--color-stone-800, #292524);
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: var(--color-stone-200, #e7e5e4);
+}
+
+.bookItem:hover .bookThumbnailContainer {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05);
 }
 
 .bookThumbnail {
-    width: 40px;
-    height: auto;
-    margin-right: 1rem;
-    border-radius: 4px;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bookInfo {
+    margin-top: 0.75rem;
+    text-align: center;
+}
+
+.bookTitle {
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1.25;
+    color: var(--color-stone-800, #292524);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.bookAuthor {
+    font-size: 0.75rem;
+    color: var(--color-stone-500, #78716c);
+    margin-top: 0.25rem;
+    font-style: italic;
 }
 
 .actions {
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
     gap: 1rem;
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-stone-100, #f5f5f4);
 }
 
 .buttonPrimary {
     background-color: var(--color-amber-600, #d97706);
     color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
     text-decoration: none;
     transition: background-color 0.2s;
-    font-weight: 500;
+    font-weight: 600;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
 .buttonPrimary:hover {
     background-color: var(--color-amber-700, #b45309);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 
 .buttonSecondary {
-    background-color: var(--color-stone-600, #57534e);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+    background-color: white;
+    color: var(--color-stone-600, #57534e);
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
     text-decoration: none;
-    transition: background-color 0.2s;
-    font-weight: 500;
+    transition: all 0.2s;
+    font-weight: 600;
+    border: 1px solid var(--color-stone-200, #e7e5e4);
 }
 
 .buttonSecondary:hover {
-    background-color: var(--color-stone-700, #44403c);
+    background-color: var(--color-stone-50, #fafaf9);
+    border-color: var(--color-stone-300, #d6d3d1);
+    color: var(--color-stone-800, #292524);
 }
