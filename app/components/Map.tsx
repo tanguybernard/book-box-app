@@ -3,77 +3,89 @@
 import { useEffect, useRef } from "react"
 import L from "leaflet"
 import { useRouter } from "next/navigation"
+import { BookBox } from "../data/mockBookBoxes"
 
+interface MapProps {
+    bookBoxes: BookBox[]
+    center?: [number, number]
+    zoom?: number
+}
 
-export default function Map() {
+export default function Map({ bookBoxes, center = [48.8566, 2.3522], zoom = 12 }: MapProps) {
     const mapRef = useRef<L.Map | null>(null)
+    const markersRef = useRef<L.Marker[]>([])
     const router = useRouter()
 
     useEffect(() => {
-        // Nettoyage si une carte existait déjà
-        if (mapRef.current) {
-            mapRef.current.remove()
-            mapRef.current = null
+        if (!mapRef.current) {
+            L.Icon.Default.mergeOptions({
+                iconRetinaUrl: "/leaflet/marker-icon-2x.png",
+                iconUrl: "/leaflet/marker-icon.png",
+                shadowUrl: "/leaflet/marker-shadow.png",
+            })
+
+            const map = L.map("map", {
+                center,
+                zoom,
+                scrollWheelZoom: true,
+            })
+
+            L.tileLayer(
+                "https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png",
+                {
+                    attribution: "©Stamen Design, ©OpenStreetMap contributors",
+                }
+            ).addTo(map)
+
+            mapRef.current = map
+        } else {
+            // Update view if center or zoom changes
+            mapRef.current.setView(center, zoom)
         }
+    }, [center, zoom])
 
-        L.Icon.Default.mergeOptions({
-            iconRetinaUrl: "./leaflet/marker-icon-2x.png",
-            iconUrl: "./fealflet/marker-icon.png",
-            shadowUrl: "./leaflet/marker-shadow.png",
-        })
+    // Update markers when bookBoxes change
+    useEffect(() => {
+        if (!mapRef.current) return
 
-        // Création de la carte Leaflet
-        const map = L.map("map", {
-            center: [48.8566, 2.3522], // coordonnées de Paris
-            zoom: 10,
-            scrollWheelZoom: false,
-        })
+        // Clear existing markers
+        markersRef.current.forEach(marker => marker.remove())
+        markersRef.current = []
 
-        L.tileLayer(
-            "https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png",
-            {
-                attribution: "©Stamen Design, ©OpenStreetMap contributors",
-            }
-        ).addTo(map)
+        bookBoxes.forEach((box) => {
+            const marker = L.marker([box.lat, box.lng]).addTo(mapRef.current!)
 
-        const cities = [
-            { name: "Paris", coords: [48.8566, 2.3522], slug: "paris" },
-            { name: "Lyon", coords: [45.764, 4.8357], slug: "lyon" },
-            { name: "Marseille", coords: [43.2965, 5.3698], slug: "marseille" },
-        ]
-
-        cities.forEach((city) => {
-            const marker = L.marker(city.coords as [number, number]).addTo(map)
             const popupContent = `
-    <div style="text-align:center;">
-      <strong>${city.name}</strong><br/>
-      <button id="btn-${city.slug}" 
-        style="margin-top:6px;background:#2563eb;color:white;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;">
-        Voir les détails
-      </button>
-    </div>
-  `
+                <div style="text-align:center;">
+                    <strong>${box.name}</strong><br/>
+                    <p style="margin: 4px 0; font-size: 12px;">${box.address}</p>
+                    <button id="btn-${box.id}" 
+                        style="margin-top:6px;background:#2563eb;color:white;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;">
+                        Voir les détails
+                    </button>
+                </div>
+            `
             marker.bindPopup(popupContent)
 
             marker.on("popupopen", () => {
-                const btn = document.getElementById(`btn-${city.slug}`)
+                const btn = document.getElementById(`btn-${box.id}`)
                 if (btn) {
-                    btn.addEventListener("click", () => router.push(`/address/${city.slug}`))
+                    btn.addEventListener("click", () => router.push(`/address/${box.id}`))
                 }
             })
+
+            markersRef.current.push(marker)
         })
+    }, [bookBoxes, router])
 
-
-        mapRef.current = map
-
-        // Cleanup lors du démontage du composant
+    useEffect(() => {
         return () => {
             if (mapRef.current) {
                 mapRef.current.remove()
                 mapRef.current = null
             }
         }
-    }, [router])
+    }, [])
 
     return <div id="map" className="w-full h-full" />
 }

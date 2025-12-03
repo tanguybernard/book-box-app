@@ -2,16 +2,20 @@
 import dynamic from "next/dynamic"
 
 const Map = dynamic(() => import("../components/Map"), {
-    ssr: false, // indispensable pour Leaflet
+    ssr: false,
     loading: () => <p>Chargement de la carte...</p>,
 })
 
-export function MapContainer() {
+interface MapContainerProps {
+    bookBoxes: any[]
+    center?: [number, number]
+    zoom?: number
+}
+
+export function MapContainer({ bookBoxes, center, zoom }: MapContainerProps) {
     return (
-        <div className="flex justify-center items-center">
-            <div className="w-[30rem] h-[30rem] border-2 border-black rounded-2xl overflow-hidden shadow-lg">
-                <Map />
-            </div>
+        <div className="w-full h-full">
+            <Map bookBoxes={bookBoxes} center={center} zoom={zoom} />
         </div>
     )
 }
