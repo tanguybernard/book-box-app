@@ -33,15 +33,15 @@ export default function HomePage() {
     };
 
     return (
-        <main className="flex h-screen w-screen overflow-hidden bg-white">
+        <main className="flex h-screen w-screen overflow-hidden bg-stone-50">
             {/* Sidebar */}
-            <div className="w-1/3 min-w-[350px] max-w-[500px] flex flex-col border-r shadow-lg z-10">
+            <div className="w-1/3 min-w-[350px] max-w-[500px] flex flex-col border-r border-stone-200 shadow-xl z-20 bg-white">
                 <SearchBar onSearch={handleSearch} />
                 <BookBoxList bookBoxes={filteredBoxes} onSelectBox={handleSelectBox} />
             </div>
 
             {/* Map */}
-            <div className="flex-1 relative">
+            <div className="flex-1 relative z-0">
                 <MapContainer bookBoxes={filteredBoxes} center={mapCenter} zoom={mapZoom} />
             </div>
         </main>

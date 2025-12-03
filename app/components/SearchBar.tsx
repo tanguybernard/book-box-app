@@ -15,16 +15,16 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
     };
 
     return (
-        <div className="p-4 border-b sticky top-0 bg-white z-10">
-            <form onSubmit={handleSubmit} className="relative">
+        <div className="p-6 border-b border-stone-200 sticky top-0 bg-white/90 backdrop-blur-sm z-10">
+            <form onSubmit={handleSubmit} className="relative max-w-md mx-auto w-full">
                 <input
                     type="text"
-                    placeholder="Search destination (e.g. Paris)"
+                    placeholder="Rechercher une ville (ex: Paris)"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black shadow-sm"
+                    className="w-full pl-12 pr-4 py-3.5 rounded-full border border-stone-200 bg-stone-50 text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:bg-white transition-all shadow-sm hover:shadow-md"
                 />
-                <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-stone-400">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
