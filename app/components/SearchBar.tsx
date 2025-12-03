@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import styles from "./SearchBar.module.css";
 
 interface SearchBarProps {
     onSearch: (query: string) => void;
@@ -15,23 +16,23 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
     };
 
     return (
-        <div className="p-6 border-b border-stone-200 sticky top-0 bg-white/90 backdrop-blur-sm z-10">
-            <form onSubmit={handleSubmit} className="relative max-w-md mx-auto w-full">
+        <div className={styles.container}>
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <input
                     type="text"
                     placeholder="Rechercher une ville (ex: Paris)"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3.5 rounded-full border border-stone-200 bg-stone-50 text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:bg-white transition-all shadow-sm hover:shadow-md"
+                    className={styles.input}
                 />
-                <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-stone-400">
+                <div className={styles.iconContainer}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth={2}
                         stroke="currentColor"
-                        className="w-5 h-5"
+                        className={styles.icon}
                     >
                         <path
                             strokeLinecap="round"

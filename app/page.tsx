@@ -5,6 +5,7 @@ import { MapContainer } from "./containers/MapContainer";
 import BookBoxList from "./components/BookBoxList";
 import SearchBar from "./components/SearchBar";
 import { mockBookBoxes, BookBox } from "./data/mockBookBoxes";
+import styles from "./page.module.css";
 
 export default function HomePage() {
     const [filteredBoxes, setFilteredBoxes] = useState<BookBox[]>(mockBookBoxes);
@@ -33,15 +34,15 @@ export default function HomePage() {
     };
 
     return (
-        <main className="flex h-screen w-screen overflow-hidden bg-stone-50">
+        <main className={styles.main}>
             {/* Sidebar */}
-            <div className="w-1/3 min-w-[350px] max-w-[500px] flex flex-col border-r border-stone-200 shadow-xl z-20 bg-white">
+            <div className={styles.sidebar}>
                 <SearchBar onSearch={handleSearch} />
                 <BookBoxList bookBoxes={filteredBoxes} onSelectBox={handleSelectBox} />
             </div>
 
             {/* Map */}
-            <div className="flex-1 relative z-0">
+            <div className={styles.mapContainer}>
                 <MapContainer bookBoxes={filteredBoxes} center={mapCenter} zoom={mapZoom} />
             </div>
         </main>

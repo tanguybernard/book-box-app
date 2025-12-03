@@ -31,9 +31,9 @@ export default function Map({ bookBoxes, center = [48.8566, 2.3522], zoom = 12 }
             })
 
             L.tileLayer(
-                "https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png",
+                "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
                 {
-                    attribution: "©Stamen Design, ©OpenStreetMap contributors",
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
                 }
             ).addTo(map)
 
