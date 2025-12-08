@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: book-box-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: bookuser
+      POSTGRES_PASSWORD: bookpassword
+      POSTGRES_DB: bookboxdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - book_box_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  book_box_postgres_data:
