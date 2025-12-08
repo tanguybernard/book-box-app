@@ -11,8 +11,14 @@ model Book {
   id        Int      @id @default(autoincrement())
   isbn      String
   title     String
-  author    String
   thumbnail String?
   addressId String
   createdAt DateTime @default(now())
+  authors   Author[]
+}
+
+model Author {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  books Book[]
 }

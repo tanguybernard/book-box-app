@@ -74,7 +74,7 @@ export default async function CityDetailsPage({ params }: DetailsPageProps) {
                                 </div>
                                 <div className={styles.bookInfo}>
                                     <h3 className={styles.bookTitle}>{b.title}</h3>
-                                    <p className={styles.bookAuthor}>{b.author}</p>
+                                    <p className={styles.bookAuthor}>{b.authors?.join(", ")}</p>
                                 </div>
                             </div>
                         ))}

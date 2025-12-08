@@ -1,6 +1,6 @@
 import { prisma } from "./client";
-import {Book} from "@/core/books/Book";
-import {BookRepository} from "@/core/books/BookRepository";
+import { Book } from "@/core/books/Book";
+import { BookRepository } from "@/core/books/BookRepository";
 
 
 export class BookPrismaRepository implements BookRepository {
@@ -13,6 +13,7 @@ export class BookPrismaRepository implements BookRepository {
     async findByAddressId(addressId: string): Promise<Book[]> {
         const rows = await prisma.book.findMany({
             where: { addressId: addressId },
+            include: { authors: true },
             orderBy: { createdAt: "desc" },
         });
         return rows.map(this.fromPrisma);
@@ -23,12 +24,16 @@ export class BookPrismaRepository implements BookRepository {
     // --- mapping methods ---
     private toPrisma(book: Book) {
         return {
-            // ne pas inclure `id` car auto-généré par Prisma
             title: book.title,
-            author: book.author,
             isbn: book.isbn,
             thumbnail: book.thumbnail,
             addressId: book.addressId,
+            authors: {
+                connectOrCreate: book.authors.map(name => ({
+                    where: { name },
+                    create: { name }
+                }))
+            }
         };
     }
 
@@ -36,7 +41,7 @@ export class BookPrismaRepository implements BookRepository {
         return {
             id: prismaBook.id,
             title: prismaBook.title,
-            author: prismaBook.author,
+            authors: prismaBook.authors?.map((a: any) => a.name) || [],
             isbn: prismaBook.isbn,
             thumbnail: prismaBook.thumbnail,
             addressId: prismaBook.addressId,

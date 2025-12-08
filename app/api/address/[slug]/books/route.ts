@@ -1,14 +1,14 @@
 import { BookPrismaRepository } from "@/infrastructure/prisma/BookPrismaRepository";
 import { NextResponse } from "next/server";
-import {ListBooksUseCase} from "@/core/books/ListBooksUseCase";
-import {AddBookUseCase} from "@/core/books/AddBookUseCase";
+import { ListBooksUseCase } from "@/core/books/ListBooksUseCase";
+import { AddBookUseCase } from "@/core/books/AddBookUseCase";
 
 export async function GET(_: Request, { params }: { params: { slug: string } }) {
     const resolvedParams = await params;
     const repo = new BookPrismaRepository();
     const listBooks = new ListBooksUseCase(repo);
     const books = await listBooks.execute(resolvedParams.slug);
-    console.log("BOOKS GET");
+    console.log("BOOKS GET", books);
     return NextResponse.json(books);
 }
 

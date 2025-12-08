@@ -7,7 +7,7 @@ export async function fetchBookInfo(isbn: string) {
     return {
         isbn,
         title: info.title,
-        author: info.authors[0] ?? "",
+        authors: info.authors || [],
         thumbnail: info.imageLinks?.thumbnail ?? null,
     };
 }

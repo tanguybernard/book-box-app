@@ -4,6 +4,9 @@
 
     npx prisma migrate dev
 
+Reset :
+    npx prisma migrate reset    
+
 ## TODO LIST
 
 Prio

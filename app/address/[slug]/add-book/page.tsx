@@ -58,7 +58,7 @@ export default function AddBookPage({ params }: { params: Promise<{ slug: string
                 {book && (
                     <div className={styles.bookDetails}>
                         <h2 className={styles.bookTitle}>{book.title}</h2>
-                        <p className={styles.bookAuthor}>{book.author}</p>
+                        <p className={styles.bookAuthor}>{book.authors?.join(", ")}</p>
                         {book.thumbnail && (
                             <img
                                 src={book.thumbnail}
