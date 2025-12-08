@@ -5,7 +5,7 @@ import { MapContainer } from "../../containers/MapContainer"
 import styles from "./page.module.css"
 
 interface DetailsPageProps {
-    params: { slug: string }
+    params: Promise<{ slug: string }>
 }
 
 export default async function CityDetailsPage({ params }: DetailsPageProps) {

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { ListBooksUseCase } from "@/core/books/ListBooksUseCase";
 import { AddBookUseCase } from "@/core/books/AddBookUseCase";
 
-export async function GET(_: Request, { params }: { params: { slug: string } }) {
+export async function GET(_: Request, { params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = await params;
     const repo = new BookPrismaRepository();
     const listBooks = new ListBooksUseCase(repo);
@@ -12,7 +12,7 @@ export async function GET(_: Request, { params }: { params: { slug: string } }) 
     return NextResponse.json(books);
 }
 
-export async function POST(req: Request, { params }: { params: { slug: string } }) {
+export async function POST(req: Request, { params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = await params;
     const repo = new BookPrismaRepository();
     const addBook = new AddBookUseCase(repo);
