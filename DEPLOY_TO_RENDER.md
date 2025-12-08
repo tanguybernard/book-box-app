@@ -40,9 +40,9 @@ datasource db {
 4.  **Runtime** : `Node`.
 5.  **Build Command** :
     ```bash
-    npm install && npx prisma generate && npm run build
+    npm install --production=false && npx prisma generate && npm run build
     ```
-    *Note : `npx prisma generate` est important pour créer le client Prisma compatible avec l'environnement Render.*
+    *Note : `--production=false` est nécessaire pour installer les types TypeScript (`devDependencies`) pendant le build, même si `NODE_ENV` est sur `production`.*
 6.  **Start Command** :
     ```bash
     npm start

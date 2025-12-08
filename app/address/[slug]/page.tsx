@@ -4,6 +4,7 @@ import { sponsoredBooks } from "../../data/sponsoredBooks"
 import { MapContainer } from "../../containers/MapContainer"
 import styles from "./page.module.css"
 
+
 interface DetailsPageProps {
     params: Promise<{ slug: string }>
 }
@@ -16,8 +17,7 @@ export default async function CityDetailsPage({ params }: DetailsPageProps) {
         notFound()
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || (process.env.PORT ? `http://localhost:${process.env.PORT}` : 'http://localhost:3000');
 
     const res = await fetch(`${baseUrl}/api/address/${resolvedParams.slug}/books`, {
         cache: "no-store",
@@ -26,7 +26,6 @@ export default async function CityDetailsPage({ params }: DetailsPageProps) {
     if (!res.ok) {
         throw new Error('Failed to fetch books');
     }
-
 
     const fetchedBooks = await res.json();
     const books = [...sponsoredBooks, ...fetchedBooks];
