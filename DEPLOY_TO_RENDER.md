@@ -2,37 +2,16 @@
 
 Voici les étapes pour déployer votre application Next.js sur Render.com.
 
-## 1. La Base de Données (PostgreSQL)
-
-Actuellement, votre application utilise **SQLite** (`dev.db`). SQLite est un fichier stocké sur le disque.
-**Problème :** Sur Render (et la plupart des hébergeurs cloud), le système de fichiers est "éphémère". Cela signifie qu'à chaque redémarrage ou déploiement, tous les fichiers créés (comme votre base de données) sont effacés.
-**Solution :** Vous devez utiliser une base de données externe comme **PostgreSQL**. Render offre une instance PostgreSQL gratuite.
-
-### Étapes pour la base de données :
+## 1. Étapes pour la base de données :
 1.  Créez un compte sur [Render.com](https://render.com/).
 2.  Cliquez sur **"New +"** et sélectionnez **"PostgreSQL"**.
 3.  Donnez un nom (ex: `book-box-db`).
 4.  Choisissez le plan **"Free"**.
 5.  Une fois créée, copiez l'**Internal Database URL** (pour le déploiement) et l'**External Database URL** (si vous souhaitez y accéder depuis votre ordinateur).
 
-## 2. Préparer le Code (Prisma)
 
-Vous devez modifier `prisma/schema.prisma` pour utiliser PostgreSQL au lieu de SQLite.
 
-**Attention :** Une fois cette modification effectuée, votre base de données locale `dev.db` ne fonctionnera plus directement avec ce schéma. Il est recommandé d'utiliser PostgreSQL aussi en local, ou de gérer deux configurations (plus complexe).
-
-### Modifications à faire :
-
-Dans `prisma/schema.prisma` :
-
-```prisma
-datasource db {
-  provider = "postgresql" // Remplace "sqlite"
-  url      = env("DATABASE_URL")
-}
-```
-
-## 3. Configuration du Service Web sur Render
+## 2. Configuration du Service Web sur Render
 
 1.  Sur le dashboard Render, cliquez sur **"New +"** -> **"Web Service"**.
 2.  Connectez votre dépôt GitHub/GitLab.
@@ -51,8 +30,10 @@ datasource db {
     ```bash
     npx prisma migrate deploy && npm start
     ```
+    
+![deploy_render_settings_web_Server.png](docs/deploy_render_settings_web_Server.png)
 
-## 4. Variables d'Environnement
+## 3. Variables d'Environnement
 
 Dans la configuration du Web Service sur Render, allez dans l'onglet **"Environment"** et ajoutez :
 
@@ -61,7 +42,12 @@ Dans la configuration du Web Service sur Render, allez dans l'onglet **"Environm
 *   **Key** : `NODE_ENV`
 *   **Value** : `production`
 
-## 5. Migration des Données
+
+Exemple :
+
+![deploy_render_com_env_vars.png](docs/deploy_render_com_env_vars.png)
+
+## 4. Migration des Données
 
 Lors du premier déploiement, la base de données sera vide. La commande `npx prisma migrate deploy` dans le *Start Command* se chargera de créer les tables.
 
