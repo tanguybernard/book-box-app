@@ -1,5 +1,29 @@
 # Ma Boite A Livre
 
+
+## Install
+
+1. Avoir une base de données en local :
+
+
+    docker-compose up -d
+
+
+2. Créer à la racine un fichier *.env*
+
+avec
+
+    DATABASE_URL="postgresql://bookuser:bookpassword@localhost:5433/bookboxdb"
+
+3. Executer les migrations Prisma
+
+3. Lancer l'application 
+
+
+      npm run dev
+
+
+
 ## Prisma :
 
     npx prisma migrate dev
@@ -25,8 +49,6 @@ Pas prio :
 - Afficher miniature livre
 - Emprunter livres (sous entendus je le remetrai)
 - BackOffice pour rajouter les points (PAs prio, en dur pour le moment)
-
-
 
 
 
