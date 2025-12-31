@@ -6,6 +6,7 @@ export interface BookBox {
     lat: number;
     lng: number;
     description?: string;
+    image?: string;
 }
 
 export const mockBookBoxes: BookBox[] = [
@@ -17,6 +18,7 @@ export const mockBookBoxes: BookBox[] = [
         lat: 48.8584,
         lng: 2.2945,
         description: "A lovely book box with a view of the Iron Lady.",
+        image: "/book-box-placeholder.png",
     },
     {
         id: "2",
@@ -26,6 +28,7 @@ export const mockBookBoxes: BookBox[] = [
         lat: 48.8809,
         lng: 2.3553,
         description: "Grab a book before your train departs!",
+        image: "/gare-du-nord-book-box.png",
     },
     {
         id: "3",
@@ -35,6 +38,7 @@ export const mockBookBoxes: BookBox[] = [
         lat: 48.8865,
         lng: 2.3408,
         description: "Located in the heart of the artistic district.",
+        image: "/montmartre-book-box.png",
     },
     {
         id: "4",
@@ -44,6 +48,7 @@ export const mockBookBoxes: BookBox[] = [
         lat: 45.7578,
         lng: 4.832,
         description: "Exchange books in the largest square in Lyon.",
+        image: "/lyon-bellecour-book-box.png",
     },
     {
         id: "5",
@@ -53,5 +58,6 @@ export const mockBookBoxes: BookBox[] = [
         lat: 43.2951,
         lng: 5.3744,
         description: "Books by the sea.",
+        image: "/marseille-vieux-port-book-box.png",
     },
 ];

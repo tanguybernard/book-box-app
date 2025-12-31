@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BookBox } from "../data/mockBookBoxes";
 import styles from "./BookBoxList.module.css";
 
@@ -18,7 +19,14 @@ export default function BookBoxList({ bookBoxes, onSelectBox }: BookBoxListProps
                 >
                     <div className={styles.cardHeader}>
                         <div>
-                            <h3 className={styles.boxName}>{box.name}</h3>
+                            <h3 className={styles.boxName}>
+                                <Link
+                                    href={`/address/${box.id}`}
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    {box.name}
+                                </Link>
+                            </h3>
                             <p className={styles.boxAddress}>{box.address}</p>
                             <p className={styles.boxCity}>{box.city}</p>
                         </div>

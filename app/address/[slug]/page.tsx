@@ -36,6 +36,15 @@ export default async function CityDetailsPage({ params }: DetailsPageProps) {
             <div className={styles.sidebar}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>{bookBox.name}</h1>
+                    {bookBox.image && (
+                        <div className={styles.imageContainer}>
+                            <img
+                                src={bookBox.image}
+                                alt={bookBox.name}
+                                className={styles.boxImage}
+                            />
+                        </div>
+                    )}
                     <p className={styles.description}>{bookBox.description || `Book box located at ${bookBox.address}`}</p>
                 </div>
 
